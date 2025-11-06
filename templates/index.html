@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Student Search - Student Management{% endblock %}
+
+{% block content %}
+<h2>Search for Students</h2>
+
+<div class="search-forms">
+    <div class="search-form">
+        <h3>Search by Name</h3>
+        <form action="{{ url_for('search') }}" method="GET">
+            <input type="hidden" name="type" value="name">
+            <div class="form-group">
+                <label for="query_name">Enter student name (partial match):</label>
+                <input type="text" id="query_name" name="query" required placeholder="e.g., Jon">
+            </div>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="search-form">
+        <h3>Search by ID</h3>
+        <form action="{{ url_for('search') }}" method="GET">
+            <input type="hidden" name="type" value="id">
+            <div class="form-group">
+                <label for="query_id">Enter student ID (partial match):</label>
+                <input type="text" id="query_id" name="query" required placeholder="e.g., 12">
+            </div>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

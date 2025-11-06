@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}{{ student.name }}'s Schedule - Student Management{% endblock %}
+
+{% block content %}
+<h2>Schedule for {{ student.name }} (ID: {{ student.id }})</h2>
+
+{% if available_years %}
+<div class="year-filter">
+    <form method="GET" action="{{ url_for('schedule', student_id=student.id) }}">
+        <label for="year">Filter by Year:</label>
+        <select id="year" name="year" onchange="this.form.submit()">
+            <option value="">All Years</option>
+            {% for year in available_years %}
+            <option value="{{ year }}" {% if selected_year == year|string %}selected{% endif %}>
+            {{ year }}
+            </option>
+            {% endfor %}
+        </select>
+    </form>
+</div>
+{% endif %}
+
+{% if schedule %}
+<p>Showing {{ schedule|length }} course(s)</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Course ID</th>
+            <th>Semester</th>
+            <th>Year</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for course in schedule %}
+        <tr>
+            <td>{{ course.id }}</td>
+            <td>{{ course.name }}</td>
+            <td>{{ course.course_id }}</td>
+            <td>{{ course.semester }}</td>
+            <td>{{ course.year }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No courses found for this student.</p>
+{% endif %}
+
+<a href="{{ url_for('index') }}" class="btn">Back to Search</a>
+{% endblock %}
+

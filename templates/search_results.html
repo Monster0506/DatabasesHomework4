@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results - Student Management{% endblock %}
+
+{% block content %}
+<h2>Search Results</h2>
+
+{% if students %}
+<p>Found {{ students|length }} student(s) matching "{{ query }}" ({{ search_type }} search)</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Total Credits</th>
+            <th>Schedule</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.id }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.dept_name or 'N/A' }}</td>
+            <td>{{ student.tot_cred }}</td>
+            <td>
+                <a href="{{ url_for('schedule', student_id=student.id) }}" class="btn-link">View Schedule</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No students found matching "{{ query }}" ({{ search_type }} search).</p>
+{% endif %}
+
+<a href="{{ url_for('index') }}" class="btn">Back to Search</a>
+{% endblock %}
+
